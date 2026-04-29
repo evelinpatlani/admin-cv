@@ -1,0 +1,55 @@
+<div class="wf-wrap">
+  <div class="wf-card">
+    <div class="wf-header">
+      <div class="wf-icon">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <circle cx="8" cy="5" r="3" stroke="#185FA5" stroke-width="1.2"/>
+          <path d="M2 13c0-3 2.5-5 6-5s6 2 6 5" stroke="#185FA5" stroke-width="1.2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div>
+        <div class="wf-title">Información personal</div>
+        <div class="wf-sub">Datos principales del perfil del CV</div>
+      </div>
+    </div>
+    <div class="wf-body">
+      <div class="wf-row">
+        <div class="wf-field">
+          <label class="wf-label">Nombre completo</label>
+          <input class="wf-input" type="text" name="name" placeholder="ej. Ana García López" [(ngModel)]="myHeader.name">
+        </div>
+        <div class="wf-field">
+          <label class="wf-label">Correo electrónico</label>
+          <input class="wf-input" type="email" name="email" placeholder="correo@ejemplo.com" [(ngModel)]="myHeader.email">
+        </div>
+      </div>
+      <div class="wf-row">
+        <div class="wf-field">
+          <label class="wf-label">Teléfono</label>
+          <input class="wf-input" type="text" name="phoneNumber" placeholder="+52 000 000 0000" [(ngModel)]="myHeader.phoneNumber">
+        </div>
+        <div class="wf-field">
+          <label class="wf-label">Ubicación</label>
+          <input class="wf-input" type="text" name="location" placeholder="Ciudad, País" [(ngModel)]="myHeader.location">
+        </div>
+      </div>
+      <div class="wf-field">
+        <label class="wf-label">Objetivo / descripción profesional</label>
+        <input class="wf-input" type="text" name="goalLife" placeholder="Una breve descripción de tu perfil profesional" [(ngModel)]="myHeader.goalLife">
+      </div>
+      <div class="wf-row">
+        <div class="wf-field">
+          <label class="wf-label">Red social / LinkedIn</label>
+          <input class="wf-input" type="text" name="socialNetwork" placeholder="linkedin.com/in/tu-perfil" [(ngModel)]="myHeader.socialNetwork">
+        </div>
+        <div class="wf-field">
+          <label class="wf-label">URL foto de perfil</label>
+          <input class="wf-input" type="text" name="photoURL" placeholder="https://..." [(ngModel)]="myHeader.photoURL">
+        </div>
+      </div>
+    </div>
+    <div class="wf-footer">
+      <button class="wf-btn" (click)="guardarHeader()">{{ btntxt }}</button>
+    </div>
+  </div>
+</div>

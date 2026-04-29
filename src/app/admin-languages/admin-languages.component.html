@@ -1,0 +1,35 @@
+<div class="wf-wrap">
+  <div class="wf-card">
+    <div class="wf-header">
+      <div class="wf-icon">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <circle cx="8" cy="8" r="6" stroke="#185FA5" stroke-width="1.2"/>
+          <path d="M8 2c-2 2-2 8 0 12M8 2c2 2 2 8 0 12M2 8h12" stroke="#185FA5" stroke-width="1.2"/>
+        </svg>
+      </div>
+      <div>
+        <div class="wf-title">Idiomas</div>
+        <div class="wf-sub">Agrega los idiomas que dominas</div>
+      </div>
+    </div>
+    <div class="wf-body">
+      <div class="wf-field">
+        <label class="wf-label">Nuevo idioma</label>
+        <div class="wf-add-row">
+          <input class="wf-input" type="text" name="language" placeholder="ej. Inglés — Avanzado (C1)" [(ngModel)]="myLanguage.languages" (keyup.enter)="agregarLanguage()">
+          <button class="wf-add-btn" (click)="agregarLanguage()">+ Agregar</button>
+        </div>
+      </div>
+    </div>
+    <div class="wf-list-section" style="padding: 0 1.5rem 1.5rem">
+      <div class="wf-list-header">Idiomas guardados</div>
+      <div class="wf-list" *ngIf="languagesList.length > 0">
+        <div class="wf-item" *ngFor="let l of languagesList">
+          <span class="wf-item-main">{{ l.language }}</span>
+          <button class="wf-del" (click)="deleteLanguage(l.id)">Eliminar</button>
+        </div>
+      </div>
+      <p class="wf-empty" *ngIf="languagesList.length === 0">Aún no hay idiomas agregados.</p>
+    </div>
+  </div>
+</div>

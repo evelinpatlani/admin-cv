@@ -1,0 +1,59 @@
+<div class="wf-wrap">
+  <div class="wf-card">
+    <div class="wf-header">
+      <div class="wf-icon">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <rect x="2" y="4" width="12" height="9" rx="1.5" stroke="#185FA5" stroke-width="1.2"/>
+          <path d="M5 4V3a1 1 0 011-1h4a1 1 0 011 1v1" stroke="#185FA5" stroke-width="1.2"/>
+          <path d="M2 7h12" stroke="#185FA5" stroke-width="1.2"/>
+        </svg>
+      </div>
+      <div>
+        <div class="wf-title">Agregar experiencia laboral</div>
+        <div class="wf-sub">Completa los campos y guarda el registro</div>
+      </div>
+    </div>
+    <div class="wf-body">
+      <div class="wf-row">
+        <div class="wf-field">
+          <label class="wf-label">Fecha inicio</label>
+          <input class="wf-input" type="text" name="startDate" placeholder="ej. Ene/2020" [(ngModel)]="myWorkExperience.startDate">
+        </div>
+        <div class="wf-field">
+          <label class="wf-label">Fecha fin</label>
+          <input class="wf-input" type="text" name="endDate" placeholder="ej. Dic/2023" [(ngModel)]="myWorkExperience.endDate">
+        </div>
+      </div>
+      <div class="wf-row">
+        <div class="wf-field">
+          <label class="wf-label">Empresa</label>
+          <input class="wf-input" type="text" name="company" placeholder="Nombre de la empresa" [(ngModel)]="myWorkExperience.company">
+        </div>
+        <div class="wf-field">
+          <label class="wf-label">Ubicación</label>
+          <input class="wf-input" type="text" name="location" placeholder="Ciudad, País" [(ngModel)]="myWorkExperience.location">
+        </div>
+      </div>
+      <div class="wf-field">
+        <label class="wf-label">Logro / descripción</label>
+        <input class="wf-input" type="text" name="accomplishment" placeholder="Describe tu rol o un logro relevante" [(ngModel)]="myWorkExperience.accomplishments">
+      </div>
+    </div>
+    <div class="wf-footer">
+      <button class="wf-btn" (click)="AgregarJob()">{{ btntxt }}</button>
+    </div>
+  </div>
+
+  <div class="wf-list-section">
+    <div class="wf-list-header">Registros guardados</div>
+    <div class="wf-list">
+      <div class="wf-item" *ngFor="let job of workExperience">
+        <div class="wf-item-info">
+          <span class="wf-item-company">{{ job.company }} — {{ job.position }}</span>
+          <span class="wf-item-dates">{{ job.startDate }} → {{ job.endDate }} · {{ job.location }}</span>
+        </div>
+        <button class="wf-del" (click)="deleteJob(job.id)">Eliminar</button>
+      </div>
+    </div>
+  </div>
+</div>

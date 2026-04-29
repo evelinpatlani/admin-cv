@@ -1,0 +1,34 @@
+<div class="wf-wrap">
+  <div class="wf-card">
+    <div class="wf-header">
+      <div class="wf-icon">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M8 2l1.5 3 3.5.5-2.5 2.5.6 3.5L8 9.8l-3.1 1.7.6-3.5L3 5.5 6.5 5z" stroke="#185FA5" stroke-width="1.2" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div>
+        <div class="wf-title">Habilidades</div>
+        <div class="wf-sub">Agrega tus competencias técnicas o blandas</div>
+      </div>
+    </div>
+    <div class="wf-body">
+      <div class="wf-field">
+        <label class="wf-label">Nueva habilidad</label>
+        <div class="wf-add-row">
+          <input class="wf-input" type="text" name="skill" placeholder="ej. Angular, SQL, Liderazgo..." [(ngModel)]="mySkill.skill" (keyup.enter)="agregarSkill()">
+          <button class="wf-add-btn" (click)="agregarSkill()">+ Agregar</button>
+        </div>
+      </div>
+    </div>
+    <div class="wf-list-section" style="padding: 0 1.5rem 1.5rem">
+      <div class="wf-list-header">Habilidades guardadas</div>
+      <div class="wf-list" *ngIf="skillsList.length > 0">
+        <div class="wf-item" *ngFor="let s of skillsList">
+          <span class="wf-item-main">{{ s.skill }}</span>
+          <button class="wf-del" (click)="deleteSkill(s.id)">Eliminar</button>
+        </div>
+      </div>
+      <p class="wf-empty" *ngIf="skillsList.length === 0">Aún no hay habilidades agregadas.</p>
+    </div>
+  </div>
+</div>

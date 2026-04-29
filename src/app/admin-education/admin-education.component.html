@@ -1,0 +1,37 @@
+<div class="wf-wrap">
+  <div class="wf-card">
+    <div class="wf-header">
+      <div class="wf-icon">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <path d="M8 2L2 5.5l6 3.5 6-3.5L8 2z" stroke="#185FA5" stroke-width="1.2" stroke-linejoin="round"/>
+          <path d="M4 7.5v4c1 1 5 1.5 4 1.5s3-.5 4-1.5v-4" stroke="#185FA5" stroke-width="1.2" stroke-linecap="round"/>
+        </svg>
+      </div>
+      <div>
+        <div class="wf-title">Educación</div>
+        <div class="wf-sub">Agrega tu formación académica</div>
+      </div>
+    </div>
+    <div class="wf-body">
+      <div class="wf-field">
+        <label class="wf-label">Nueva entrada educativa</label>
+        <div class="wf-add-row">
+          <input class="wf-input" type="text" name="newEdu" placeholder="ej. Ing. en Sistemas — UNAM (2018–2022)" [(ngModel)]="newItem" (keyup.enter)="agregarItem()">
+          <button class="wf-add-btn" (click)="agregarItem()">+ Agregar</button>
+        </div>
+      </div>
+      <div>
+        <div class="wf-list" *ngIf="myEducation.education && myEducation.education.length > 0">
+          <div class="wf-item" *ngFor="let edu of myEducation.education; let i = index">
+            <span class="wf-item-main">{{ edu }}</span>
+            <button class="wf-del" (click)="eliminarItem(i)">Eliminar</button>
+          </div>
+        </div>
+        <p class="wf-empty" *ngIf="!myEducation.education || myEducation.education.length === 0">Aún no hay entradas de educación.</p>
+      </div>
+    </div>
+    <div class="wf-footer">
+      <button class="wf-btn" (click)="guardarEducation()">{{ btntxt }}</button>
+    </div>
+  </div>
+</div>

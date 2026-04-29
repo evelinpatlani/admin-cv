@@ -1,0 +1,37 @@
+<div class="wf-wrap">
+  <div class="wf-card">
+    <div class="wf-header">
+      <div class="wf-icon">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+          <rect x="2" y="2" width="12" height="10" rx="1.5" stroke="#185FA5" stroke-width="1.2"/>
+          <path d="M5 10l2-2 2 2 3-3" stroke="#185FA5" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div>
+        <div class="wf-title">Certificados</div>
+        <div class="wf-sub">Agrega tus certificaciones y cursos</div>
+      </div>
+    </div>
+    <div class="wf-body">
+      <div class="wf-field">
+        <label class="wf-label">Nuevo certificado</label>
+        <div class="wf-add-row">
+          <input class="wf-input" type="text" name="newCert" placeholder="ej. AWS Solutions Architect 2024" [(ngModel)]="newItem" (keyup.enter)="agregarItem()">
+          <button class="wf-add-btn" (click)="agregarItem()">+ Agregar</button>
+        </div>
+      </div>
+      <div>
+        <div class="wf-list" *ngIf="myCertificates.certificates && myCertificates.certificates.length > 0">
+          <div class="wf-item" *ngFor="let cert of myCertificates.certificates; let i = index">
+            <span class="wf-item-main">{{ cert }}</span>
+            <button class="wf-del" (click)="eliminarItem(i)">Eliminar</button>
+          </div>
+        </div>
+        <p class="wf-empty" *ngIf="!myCertificates.certificates || myCertificates.certificates.length === 0">Aún no hay certificados agregados.</p>
+      </div>
+    </div>
+    <div class="wf-footer">
+      <button class="wf-btn" (click)="guardarCertificates()">{{ btntxt }}</button>
+    </div>
+  </div>
+</div>
