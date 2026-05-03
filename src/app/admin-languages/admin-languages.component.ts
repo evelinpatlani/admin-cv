@@ -1,36 +1,38 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LanguagesService } from '../services/languages-service/languages.service';
-import { languages } from '../models/languages/languages.model';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-languages',
   templateUrl: './admin-languages.component.html',
   styleUrl: './admin-languages.component.css'
 })
-export class AdminLanguagesComponent {
-  btntxt: string = 'Agregar';
-  languagesList: any[] = [];
-  myLanguage: languages = new languages();
+export class AdminLanguagesComponent implements OnInit {
+  btntxt: string = 'Guardar';
+  languagesList: string[] = [];
+  newLanguage: string = '';
 
-  constructor(public languagesService: LanguagesService) {
-    this.languagesService.getLanguages().snapshotChanges().pipe(
-      map(changes => changes.map(c => ({ id: c.payload.doc.id, ...c.payload.doc.data() as languages })))
-    ).subscribe(data => {
+  constructor(public languagesService: LanguagesService) {}
+
+  ngOnInit() {
+    this.languagesService.getLanguages().subscribe((data: string[]) => {
       this.languagesList = data;
     });
   }
 
   agregarLanguage() {
-    this.languagesService.createLanguage(this.myLanguage).then(() => {
-      console.log('Idioma agregado con éxito');
-      this.myLanguage = new languages();
-    });
+    if (!this.newLanguage.trim()) return;
+    this.languagesList.push(this.newLanguage.trim());
+    this.newLanguage = '';
   }
 
-  deleteLanguage(id?: string) {
-    this.languagesService.deleteLanguage(id).then(() => {
-      console.log('Idioma eliminado con éxito');
+  eliminarLanguage(index: number) {
+    this.languagesList.splice(index, 1);
+  }
+
+  guardarLanguages() {
+    this.languagesService.saveLanguages(this.languagesList).then(() => {
+      this.btntxt = '¡Guardado!';
+      setTimeout(() => this.btntxt = 'Guardar', 2000);
     });
   }
 }

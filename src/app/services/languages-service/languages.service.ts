@@ -1,27 +1,21 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
-import { languages } from '../../models/languages/languages.model';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LanguagesService {
-  private dbPath = '/languages';
-  languagesRef: AngularFirestoreCollection<languages>;
 
-  constructor(public db: AngularFirestore) {
-    this.languagesRef = db.collection(this.dbPath);
+  constructor(public db: AngularFirestore) {}
+
+  getLanguages() {
+    return this.db.collection('languages').valueChanges().pipe(
+      map((docs: any[]) => docs[0]?.languages || [])
+    );
   }
 
-  getLanguages(): AngularFirestoreCollection<languages> {
-    return this.languagesRef;
-  }
-
-  createLanguage(myLanguage: languages): any {
-    return this.languagesRef.add({ ...myLanguage });
-  }
-
-  deleteLanguage(id?: string): Promise<void> {
-    return this.languagesRef.doc(id).delete();
+  saveLanguages(list: string[]): Promise<void> {
+    return this.db.collection('languages').doc('main').set({ languages: list }, { merge: true });
   }
 }

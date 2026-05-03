@@ -1,36 +1,40 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { InterestsService } from '../services/interests-service/interests.service';
-import { interests } from '../models/interests/interests.model';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-interests',
   templateUrl: './admin-interests.component.html',
   styleUrl: './admin-interests.component.css'
 })
-export class AdminInterestsComponent {
-  btntxt: string = 'Agregar';
-  interestsList: interests[] = [];
-  myInterest: interests = new interests();
+export class AdminInterestsComponent implements OnInit {
+  btntxt: string = 'Guardar';
+  interestsList: string[] = [];
+  newInterest: string = '';
+  docId: string | null = null;
 
-  constructor(public interestsService: InterestsService) {
-    this.interestsService.getInterests().snapshotChanges().pipe(
-      map(changes => changes.map(c => ({ id: c.payload.doc.id, ...c.payload.doc.data() as interests })))
-    ).subscribe(data => {
-      this.interestsList = data as any[];
+  constructor(public interestsService: InterestsService) {}
+
+  ngOnInit() {
+    this.interestsService.getInterests().subscribe((result) => {
+      this.docId = result.id;
+      this.interestsList = result.data;
     });
   }
 
   agregarInterest() {
-    this.interestsService.createInterest(this.myInterest).then(() => {
-      console.log('Interés agregado con éxito');
-      this.myInterest = new interests();
-    });
+    if (!this.newInterest.trim()) return;
+    this.interestsList.push(this.newInterest.trim());
+    this.newInterest = '';
   }
 
-  deleteInterest(id?: string) {
-    this.interestsService.deleteInterest(id).then(() => {
-      console.log('Interés eliminado con éxito');
+  eliminarInterest(index: number) {
+    this.interestsList.splice(index, 1);
+  }
+
+    guardarInterests() {
+    this.interestsService.saveInterests(this.docId, this.interestsList).then(() => {
+      this.btntxt = '¡Guardado!';
+      setTimeout(() => this.btntxt = 'Guardar', 2000);
     });
   }
 }

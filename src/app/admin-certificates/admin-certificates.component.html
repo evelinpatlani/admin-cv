@@ -16,19 +16,18 @@
       <div class="wf-field">
         <label class="wf-label">Nuevo certificado</label>
         <div class="wf-add-row">
-          <input class="wf-input" type="text" name="newCert" placeholder="ej. AWS Solutions Architect 2024" [(ngModel)]="newItem" (keyup.enter)="agregarItem()">
-          <button class="wf-add-btn" (click)="agregarItem()">+ Agregar</button>
+          <input class="wf-input" type="text" placeholder="ej. AWS Solutions Architect 2024"
+            [(ngModel)]="newCertificate" (keyup.enter)="agregarCertificate()">
+          <button class="wf-add-btn" (click)="agregarCertificate()">+ Agregar</button>
         </div>
       </div>
-      <div>
-        <div class="wf-list" *ngIf="myCertificates.certificates && myCertificates.certificates.length > 0">
-          <div class="wf-item" *ngFor="let cert of myCertificates.certificates; let i = index">
-            <span class="wf-item-main">{{ cert }}</span>
-            <button class="wf-del" (click)="eliminarItem(i)">Eliminar</button>
-          </div>
+      <div class="wf-list" *ngIf="certificatesList.length > 0">
+        <div class="wf-item" *ngFor="let cert of certificatesList; let i = index">
+          <span class="wf-item-main">{{ cert }}</span>
+          <button class="wf-del" (click)="eliminarCertificate(i)">Eliminar</button>
         </div>
-        <p class="wf-empty" *ngIf="!myCertificates.certificates || myCertificates.certificates.length === 0">Aún no hay certificados agregados.</p>
       </div>
+      <p class="wf-empty" *ngIf="certificatesList.length === 0">Aún no hay certificados agregados.</p>
     </div>
     <div class="wf-footer">
       <button class="wf-btn" (click)="guardarCertificates()">{{ btntxt }}</button>

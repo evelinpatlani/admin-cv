@@ -16,19 +16,18 @@
       <div class="wf-field">
         <label class="wf-label">Nueva entrada educativa</label>
         <div class="wf-add-row">
-          <input class="wf-input" type="text" name="newEdu" placeholder="ej. Ing. en Sistemas — UNAM (2018–2022)" [(ngModel)]="newItem" (keyup.enter)="agregarItem()">
-          <button class="wf-add-btn" (click)="agregarItem()">+ Agregar</button>
+          <input class="wf-input" type="text" placeholder="ej. Ing. en Sistemas — UNAM (2018–2022)"
+            [(ngModel)]="newEducation" (keyup.enter)="agregarEducation()">
+          <button class="wf-add-btn" (click)="agregarEducation()">+ Agregar</button>
         </div>
       </div>
-      <div>
-        <div class="wf-list" *ngIf="myEducation.education && myEducation.education.length > 0">
-          <div class="wf-item" *ngFor="let edu of myEducation.education; let i = index">
-            <span class="wf-item-main">{{ edu }}</span>
-            <button class="wf-del" (click)="eliminarItem(i)">Eliminar</button>
-          </div>
+      <div class="wf-list" *ngIf="educationList.length > 0">
+        <div class="wf-item" *ngFor="let edu of educationList; let i = index">
+          <span class="wf-item-main">{{ edu }}</span>
+          <button class="wf-del" (click)="eliminarEducation(i)">Eliminar</button>
         </div>
-        <p class="wf-empty" *ngIf="!myEducation.education || myEducation.education.length === 0">Aún no hay entradas de educación.</p>
       </div>
+      <p class="wf-empty" *ngIf="educationList.length === 0">Aún no hay entradas de educación.</p>
     </div>
     <div class="wf-footer">
       <button class="wf-btn" (click)="guardarEducation()">{{ btntxt }}</button>

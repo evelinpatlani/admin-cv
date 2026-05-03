@@ -16,20 +16,21 @@
       <div class="wf-field">
         <label class="wf-label">Nuevo idioma</label>
         <div class="wf-add-row">
-          <input class="wf-input" type="text" name="language" placeholder="ej. Inglés — Avanzado (C1)" [(ngModel)]="myLanguage.languages" (keyup.enter)="agregarLanguage()">
+          <input class="wf-input" type="text" placeholder="ej. Inglés — Avanzado (C1)"
+            [(ngModel)]="newLanguage" (keyup.enter)="agregarLanguage()">
           <button class="wf-add-btn" (click)="agregarLanguage()">+ Agregar</button>
         </div>
       </div>
-    </div>
-    <div class="wf-list-section" style="padding: 0 1.5rem 1.5rem">
-      <div class="wf-list-header">Idiomas guardados</div>
       <div class="wf-list" *ngIf="languagesList.length > 0">
-        <div class="wf-item" *ngFor="let l of languagesList">
-          <span class="wf-item-main">{{ l.language }}</span>
-          <button class="wf-del" (click)="deleteLanguage(l.id)">Eliminar</button>
+        <div class="wf-item" *ngFor="let lang of languagesList; let i = index">
+          <span class="wf-item-main">{{ lang }}</span>
+          <button class="wf-del" (click)="eliminarLanguage(i)">Eliminar</button>
         </div>
       </div>
       <p class="wf-empty" *ngIf="languagesList.length === 0">Aún no hay idiomas agregados.</p>
+    </div>
+    <div class="wf-footer">
+      <button class="wf-btn" (click)="guardarLanguages()">{{ btntxt }}</button>
     </div>
   </div>
 </div>

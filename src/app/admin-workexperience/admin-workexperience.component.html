@@ -17,30 +17,46 @@
       <div class="wf-row">
         <div class="wf-field">
           <label class="wf-label">Fecha inicio</label>
-          <input class="wf-input" type="text" name="startDate" placeholder="ej. Ene/2020" [(ngModel)]="myWorkExperience.startDate">
+          <input class="wf-input" type="text" placeholder="ej. Ene/2020" [(ngModel)]="myWorkExperience.startDate">
         </div>
         <div class="wf-field">
           <label class="wf-label">Fecha fin</label>
-          <input class="wf-input" type="text" name="endDate" placeholder="ej. Dic/2023" [(ngModel)]="myWorkExperience.endDate">
+          <input class="wf-input" type="text" placeholder="ej. Dic/2023" [(ngModel)]="myWorkExperience.endDate">
         </div>
       </div>
       <div class="wf-row">
         <div class="wf-field">
           <label class="wf-label">Empresa</label>
-          <input class="wf-input" type="text" name="company" placeholder="Nombre de la empresa" [(ngModel)]="myWorkExperience.company">
+          <input class="wf-input" type="text" placeholder="Nombre de la empresa" [(ngModel)]="myWorkExperience.company">
         </div>
         <div class="wf-field">
           <label class="wf-label">Ubicación</label>
-          <input class="wf-input" type="text" name="location" placeholder="Ciudad, País" [(ngModel)]="myWorkExperience.location">
+          <input class="wf-input" type="text" placeholder="Ciudad, País" [(ngModel)]="myWorkExperience.location">
         </div>
       </div>
       <div class="wf-field">
-        <label class="wf-label">Logro / descripción</label>
-        <input class="wf-input" type="text" name="accomplishment" placeholder="Describe tu rol o un logro relevante" [(ngModel)]="myWorkExperience.accomplishments">
+        <label class="wf-label">Puesto</label>
+        <input class="wf-input" type="text" placeholder="ej. Desarrollador Frontend" [(ngModel)]="myWorkExperience.position">
+      </div>
+
+      <!-- Logros como array -->
+      <div class="wf-field">
+        <label class="wf-label">Logros</label>
+        <div class="wf-add-row">
+          <input class="wf-input" type="text" placeholder="Describe un logro relevante"
+            [(ngModel)]="newAccomplishment" (keyup.enter)="agregarAccomplishment()">
+          <button class="wf-add-btn" (click)="agregarAccomplishment()">+ Agregar</button>
+        </div>
+        <div class="wf-list" *ngIf="myWorkExperience.accomplishments && myWorkExperience.accomplishments.length > 0">
+          <div class="wf-item" *ngFor="let acc of myWorkExperience.accomplishments; let i = index">
+            <span class="wf-item-main">{{ acc }}</span>
+            <button class="wf-del" (click)="eliminarAccomplishment(i)">Eliminar</button>
+          </div>
+        </div>
       </div>
     </div>
     <div class="wf-footer">
-      <button class="wf-btn" (click)="AgregarJob()">{{ btntxt }}</button>
+      <button class="wf-btn" (click)="agregarJob()">{{ btntxt }}</button>
     </div>
   </div>
 

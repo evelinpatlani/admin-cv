@@ -12,23 +12,30 @@
       </div>
     </div>
     <div class="wf-body">
-      <div class="wf-field">
-        <label class="wf-label">Nueva habilidad</label>
-        <div class="wf-add-row">
-          <input class="wf-input" type="text" name="skill" placeholder="ej. Angular, SQL, Liderazgo..." [(ngModel)]="mySkill.skill" (keyup.enter)="agregarSkill()">
-          <button class="wf-add-btn" (click)="agregarSkill()">+ Agregar</button>
+      <div class="wf-row">
+        <div class="wf-field">
+          <label class="wf-label">Habilidad</label>
+          <input class="wf-input" type="text" placeholder="ej. Angular, SQL, Liderazgo..."
+            [(ngModel)]="newSkillName" (keyup.enter)="agregarSkill()">
+        </div>
+        <div class="wf-field">
+          <label class="wf-label">Nivel (0–100): {{ newSkillLevel }}%</label>
+          <input class="wf-input" type="range" min="0" max="100"
+            [(ngModel)]="newSkillLevel">
         </div>
       </div>
-    </div>
-    <div class="wf-list-section" style="padding: 0 1.5rem 1.5rem">
-      <div class="wf-list-header">Habilidades guardadas</div>
+      <button class="wf-add-btn" (click)="agregarSkill()">+ Agregar</button>
+
       <div class="wf-list" *ngIf="skillsList.length > 0">
-        <div class="wf-item" *ngFor="let s of skillsList">
-          <span class="wf-item-main">{{ s.skill }}</span>
-          <button class="wf-del" (click)="deleteSkill(s.id)">Eliminar</button>
+        <div class="wf-item" *ngFor="let s of skillsList; let i = index">
+          <span class="wf-item-main">{{ s.name }} — {{ s.level }}%</span>
+          <button class="wf-del" (click)="eliminarSkill(i)">Eliminar</button>
         </div>
       </div>
       <p class="wf-empty" *ngIf="skillsList.length === 0">Aún no hay habilidades agregadas.</p>
+    </div>
+    <div class="wf-footer">
+      <button class="wf-btn" (click)="guardarSkills()">{{ btntxt }}</button>
     </div>
   </div>
 </div>

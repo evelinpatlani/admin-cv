@@ -15,20 +15,21 @@
       <div class="wf-field">
         <label class="wf-label">Nuevo interés</label>
         <div class="wf-add-row">
-          <input class="wf-input" type="text" name="interest" placeholder="ej. Fotografía, Senderismo..." [(ngModel)]="myInterest.interests" (keyup.enter)="agregarInterest()">
+          <input class="wf-input" type="text" placeholder="ej. Fotografía, Senderismo..."
+            [(ngModel)]="newInterest" (keyup.enter)="agregarInterest()">
           <button class="wf-add-btn" (click)="agregarInterest()">+ Agregar</button>
         </div>
       </div>
-    </div>
-    <div class="wf-list-section" style="padding: 0 1.5rem 1.5rem">
-      <div class="wf-list-header">Intereses guardados</div>
       <div class="wf-list" *ngIf="interestsList.length > 0">
-        <div class="wf-item" *ngFor="let i of interestsList">
-          <span class="wf-item-main">{{ i.interests }}</span>
-          <button class="wf-del" (click)="deleteInterest(i.id)">Eliminar</button>
+        <div class="wf-item" *ngFor="let interest of interestsList; let i = index">
+          <span class="wf-item-main">{{ interest }}</span>
+          <button class="wf-del" (click)="eliminarInterest(i)">Eliminar</button>
         </div>
       </div>
       <p class="wf-empty" *ngIf="interestsList.length === 0">Aún no hay intereses agregados.</p>
+    </div>
+    <div class="wf-footer">
+      <button class="wf-btn" (click)="guardarInterests()">{{ btntxt }}</button>
     </div>
   </div>
 </div>

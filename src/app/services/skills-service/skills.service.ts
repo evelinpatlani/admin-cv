@@ -1,27 +1,21 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
-import { skills } from '../../models/skills/skills.model';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SkillsService {
-  private dbPath = '/skills';
-  skillsRef: AngularFirestoreCollection<skills>;
 
-  constructor(private db: AngularFirestore) {
-    this.skillsRef = db.collection(this.dbPath);
+  constructor(private db: AngularFirestore) {}
+
+  getSkills() {
+    return this.db.collection('skills').valueChanges().pipe(
+      map((docs: any[]) => docs[0]?.skills || [])
+    );
   }
 
-  getSkills(): AngularFirestoreCollection<skills> {
-    return this.skillsRef;
-  }
-
-  createSkill(mySkill: skills): any {
-    return this.skillsRef.add({ ...mySkill });
-  }
-
-  deleteSkill(id?: string): Promise<void> {
-    return this.skillsRef.doc(id).delete();
+  saveSkills(skillsList: { name: string, level: number }[]): Promise<void> {
+    return this.db.collection('skills').doc('main').set({ skills: skillsList }, { merge: true });
   }
 }

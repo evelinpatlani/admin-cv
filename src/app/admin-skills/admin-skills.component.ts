@@ -1,36 +1,40 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SkillsService } from '../services/skills-service/skills.service';
-import { skills } from '../models/skills/skills.model';
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-admin-skills',
   templateUrl: './admin-skills.component.html',
   styleUrl: './admin-skills.component.css'
 })
-export class AdminSkillsComponent {
-  btntxt: string = 'Agregar';
-  skillsList: skills[] = [];
-  mySkill: skills = new skills();
+export class AdminSkillsComponent implements OnInit {
+  btntxt: string = 'Guardar';
+  skillsList: { name: string, level: number }[] = [];
+  newSkillName: string = '';
+  newSkillLevel: number = 80;
 
-  constructor(public skillsService: SkillsService) {
-    this.skillsService.getSkills().snapshotChanges().pipe(
-      map(changes => changes.map(c => ({ id: c.payload.doc.id, ...c.payload.doc.data() as skills })))
-    ).subscribe(data => {
+  constructor(public skillsService: SkillsService) {}
+
+  ngOnInit() {
+    this.skillsService.getSkills().subscribe((data) => {
       this.skillsList = data;
     });
   }
 
   agregarSkill() {
-    this.skillsService.createSkill(this.mySkill).then(() => {
-      console.log('Skill agregada con éxito');
-      this.mySkill = new skills();
-    });
+    if (!this.newSkillName.trim()) return;
+    this.skillsList.push({ name: this.newSkillName.trim(), level: this.newSkillLevel });
+    this.newSkillName = '';
+    this.newSkillLevel = 80;
   }
 
-  deleteSkill(id?: string) {
-    this.skillsService.deleteSkill(id).then(() => {
-      console.log('Skill eliminada con éxito');
+  eliminarSkill(index: number) {
+    this.skillsList.splice(index, 1);
+  }
+
+  guardarSkills() {
+    this.skillsService.saveSkills(this.skillsList).then(() => {
+      this.btntxt = '¡Guardado!';
+      setTimeout(() => this.btntxt = 'Guardar', 2000);
     });
   }
 }

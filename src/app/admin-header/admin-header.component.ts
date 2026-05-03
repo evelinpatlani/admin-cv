@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HeaderService } from '../services/header-service/header.service';
 import { Header } from '../models/header/header.model';
 
@@ -7,15 +7,22 @@ import { Header } from '../models/header/header.model';
   templateUrl: './admin-header.component.html',
   styleUrl: './admin-header.component.css'
 })
-export class AdminHeaderComponent {
+export class AdminHeaderComponent implements OnInit {
   btntxt: string = 'Guardar';
   myHeader: Header = new Header();
 
   constructor(public headerService: HeaderService) {}
 
+  ngOnInit() {
+    this.headerService.getHeader().subscribe((data: any) => {
+      if (data) this.myHeader = data;
+    });
+  }
+
   guardarHeader() {
     this.headerService.saveHeader(this.myHeader).then(() => {
-      console.log('Header guardado con éxito');
+      this.btntxt = '¡Guardado!';
+      setTimeout(() => this.btntxt = 'Guardar', 2000);
     });
   }
 }

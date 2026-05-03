@@ -1,27 +1,25 @@
 import { Injectable } from '@angular/core';
-import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/compat/firestore';
-import { interests } from '../../models/interests/interests.model';
+import { AngularFirestore } from '@angular/fire/compat/firestore';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InterestsService {
-  private dbPath = '/interests';
-  interestsRef: AngularFirestoreCollection<interests>;
 
-  constructor(private db: AngularFirestore) {
-    this.interestsRef = db.collection(this.dbPath);
+  constructor(private db: AngularFirestore) {}
+
+ getInterests() {
+    return this.db.collection('interests').snapshotChanges().pipe(
+      map((docs: any[]) => ({
+        id: docs[0]?.payload.doc.id || null,
+        data: docs[0]?.payload.doc.data()?.interests || []
+      }))
+    );
   }
 
-  getInterests(): AngularFirestoreCollection<interests> {
-    return this.interestsRef;
-  }
-
-  createInterest(myInterest: interests): any {
-    return this.interestsRef.add({ ...myInterest });
-  }
-
-  deleteInterest(id?: string): Promise<void> {
-    return this.interestsRef.doc(id).delete();
+  saveInterests(id: string | null, list: string[]): Promise<void> {
+    const docId = id || 'main';
+    return this.db.collection('interests').doc(docId).set({ interests: list }, { merge: true });
   }
 }

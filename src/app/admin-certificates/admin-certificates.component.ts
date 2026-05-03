@@ -1,35 +1,40 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CertificatesService } from '../services/certificates-service/certificates.service';
-import { certificates } from '../models/certificates/certificates.model';
 
 @Component({
   selector: 'app-admin-certificates',
   templateUrl: './admin-certificates.component.html',
   styleUrl: './admin-certificates.component.css'
 })
-export class AdminCertificatesComponent {
+export class AdminCertificatesComponent implements OnInit {
   btntxt: string = 'Guardar';
-  newItem: string = '';
-  myCertificates: certificates = new certificates();
+  certificatesList: string[] = [];
+  newCertificate: string = '';
+  docId: string | null = null;
 
-  constructor(public certificatesService: CertificatesService) {
-    if (!this.myCertificates.certificates) this.myCertificates.certificates = [];
+  constructor(public certificatesService: CertificatesService) {}
+
+  ngOnInit() {
+    this.certificatesService.getCertificates().subscribe((result) => {
+      this.docId = result.id;
+      this.certificatesList = result.data;
+    });
   }
 
-  agregarItem() {
-    if (!this.newItem.trim()) return;
-    if (!this.myCertificates.certificates) this.myCertificates.certificates = [];
-    this.myCertificates.certificates.push(this.newItem.trim());
-    this.newItem = '';
+  agregarCertificate() {
+    if (!this.newCertificate.trim()) return;
+    this.certificatesList.push(this.newCertificate.trim());
+    this.newCertificate = '';
   }
 
-  eliminarItem(index: number) {
-    this.myCertificates.certificates?.splice(index, 1);
+  eliminarCertificate(index: number) {
+    this.certificatesList.splice(index, 1);
   }
 
   guardarCertificates() {
-    this.certificatesService.saveCertificates(this.myCertificates).then(() => {
-      console.log('Certificados guardados con éxito');
+    this.certificatesService.saveCertificates(this.docId, this.certificatesList).then(() => {
+      this.btntxt = '¡Guardado!';
+      setTimeout(() => this.btntxt = 'Guardar', 2000);
     });
   }
 }
